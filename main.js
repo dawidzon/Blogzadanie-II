@@ -39,11 +39,13 @@ function render() {
   addPostsFromOutside.setAttribute("type", "button");
   addPostsFromOutside.setAttribute("value", "Dodaj posty");
 
-  addPostsFromOutside.onclick = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts?userId=1")
-      .then((res) => res.json())
-      .then((data) =>
-        data.forEach((el) => {
+  addPostsFromOutside.onclick = async () => {
+    const result = await fetch(
+      "https://jsonplaceholder.typicode.com/posts?userId=1"
+    )
+      .then((result) => result.json())
+      .then((result) =>
+        result.forEach((el) => {
           articles.push({
             id: articles.length + 1,
             title: el.title,
