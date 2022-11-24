@@ -42,19 +42,18 @@ function render() {
   addPostsFromOutside.onclick = async () => {
     const result = await fetch(
       "https://jsonplaceholder.typicode.com/posts?userId=1"
-    )
-      .then((result) => result.json())
-      .then((result) =>
-        result.forEach((el) => {
-          articles.push({
-            id: articles.length + 1,
-            title: el.title,
-            body: el.body,
-            likesCount: 0,
-          });
-          render();
-        })
-      );
+    );
+    const data = await result.json();
+
+    data.forEach((el) => {
+      articles.push({
+        id: articles.length + 1,
+        title: el.title,
+        body: el.body,
+        likesCount: 0,
+      });
+      render();
+    });
   };
 
   const numberOfPosts = document.createElement("div");
