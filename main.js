@@ -35,6 +35,10 @@ function render() {
   const rootElement = document.querySelector("#root");
   rootElement.innerHTML = "";
 
+  const loginPage = document.createElement("a");
+  loginPage.textContent = "LOGIN";
+  loginPage.setAttribute("href", "./login.html");
+
   const addPostsFromOutside = document.createElement("input");
   addPostsFromOutside.setAttribute("type", "button");
   addPostsFromOutside.setAttribute("value", "Dodaj posty");
@@ -45,11 +49,11 @@ function render() {
     );
     const data = await result.json();
 
-    data.forEach((el) => {
+    data.forEach(({ title, body }) => {
       articles.push({
         id: articles.length + 1,
-        title: el.title,
-        body: el.body,
+        title,
+        body,
         likesCount: 0,
       });
       render();
@@ -160,6 +164,7 @@ function render() {
   rootElement.appendChild(addArticleBody);
   rootElement.appendChild(addArticleButton);
   rootElement.appendChild(addPostsFromOutside);
+  rootElement.appendChild(loginPage);
   rootElement.appendChild(numberOfPosts);
   rootElement.appendChild(tableElement);
 }
