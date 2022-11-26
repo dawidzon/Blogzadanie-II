@@ -35,6 +35,31 @@ function render() {
   const rootElement = document.querySelector("#root");
   rootElement.innerHTML = "";
 
+  const loginPage = document.createElement("a");
+  loginPage.textContent = "LOGIN";
+  loginPage.setAttribute("href", "./login.html");
+
+  const addPostsFromOutside = document.createElement("input");
+  addPostsFromOutside.setAttribute("type", "button");
+  addPostsFromOutside.setAttribute("value", "Dodaj posty");
+
+  addPostsFromOutside.onclick = async () => {
+    const result = await fetch(
+      "https://jsonplaceholder.typicode.com/posts?userId=1"
+    );
+    const data = await result.json();
+
+    data.forEach(({ title, body }) => {
+      articles.push({
+        id: articles.length + 1,
+        title,
+        body,
+        likesCount: 0,
+      });
+      render();
+    });
+  };
+
   const numberOfPosts = document.createElement("div");
   numberOfPosts.innerText =
     "Ilość postów na stronie wynosi: " + articles.length;
@@ -50,7 +75,6 @@ function render() {
   const addArticleButton = document.createElement("input");
   addArticleButton.setAttribute("type", "button");
   addArticleButton.setAttribute("value", "Dodaj");
-  addArticleButton.setAttribute("id", "delete-article");
 
   addArticleButton.onclick = () => {
     const newArticleTitle = addArticleTitle.value;
@@ -139,6 +163,8 @@ function render() {
   rootElement.appendChild(addArticleTitle);
   rootElement.appendChild(addArticleBody);
   rootElement.appendChild(addArticleButton);
+  rootElement.appendChild(addPostsFromOutside);
+  rootElement.appendChild(loginPage);
   rootElement.appendChild(numberOfPosts);
   rootElement.appendChild(tableElement);
 }
